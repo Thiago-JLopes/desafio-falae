@@ -5,6 +5,7 @@ import { Order } from "./entity/Order"
 import { Product } from "./entity/Product"
 import { OrderItem } from "./entity/OrderItem"
 
+//dados de conexão com BD e mapeamento da entidades
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: "localhost",

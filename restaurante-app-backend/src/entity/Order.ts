@@ -14,7 +14,7 @@ export class Order {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({precision: 10, scale: 2, nullable: false})
+    @Column("decimal",{precision: 10, scale: 2, nullable: false})
     totalPrice: number
 
     @Column({type: "enum", enum: OrderStatus, nullable: false})

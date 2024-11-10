@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
 import { OrderItem } from "./OrderItem"
 
 @Entity()
@@ -9,7 +9,7 @@ export class Product {
     @Column({nullable: false})
     name: string
 
-    @Column({precision: 10, scale: 2, nullable: false})
+    @Column("decimal",{precision: 10, scale: 2, nullable: false})
     price: number
 
     @Column({length: 255, nullable: false})
