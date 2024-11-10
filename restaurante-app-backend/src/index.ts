@@ -1,9 +1,20 @@
+const express = require('express');
 import { AppDataSource } from "./data-source";
+import userRoutes from "../src/routes/userRoutes"
+import productRoutes from "../src/routes/productRoutes";
+
 
 // Importa o módulo `express` para criar um servidor HTTP.
-const express = require('express');
 const app = express(); // Cria uma instância do Express.
 const PORT = 3000;     // Define a porta em que o servidor vai escutar.
+
+// Middleware para parsear JSON
+app.use(express.json());
+
+//Define as rotas
+app.use('/api', userRoutes) //rota de registro de usuários
+app.use('/api', productRoutes) //rota de cadastro de produtos
+
 
 // Inicializa a conexão com o banco de dados utilizando o TypeORM.
 AppDataSource.initialize()
