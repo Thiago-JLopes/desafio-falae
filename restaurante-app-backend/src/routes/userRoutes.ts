@@ -1,4 +1,4 @@
-import { register } from '../controllers/userController';
+import { register } from '../api/controllers/userController';
 
 const router = require("express").Router();
 

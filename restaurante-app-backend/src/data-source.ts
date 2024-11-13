@@ -1,9 +1,9 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { User } from "./entity/User"
-import { Order } from "./entity/Order"
-import { Product } from "./entity/Product"
-import { OrderItem } from "./entity/OrderItem"
+import { User } from "./model/entity/User"
+import { Order } from "./model/entity/Order"
+import { Product } from "./model/entity/Product"
+import { OrderItem } from "./model/entity/OrderItem"
 
 //dados de conexão com BD e mapeamento da entidades
 export const AppDataSource = new DataSource({

@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
 import { OrderItem } from "./OrderItem"
+import { IsUrl, Min } from "class-validator"
 
 @Entity()
 export class Product {
@@ -9,6 +10,7 @@ export class Product {
     @Column({nullable: false})
     name: string
 
+    @Min(0)
     @Column("decimal",{precision: 10, scale: 2, nullable: false})
     price: number
 
@@ -18,6 +20,7 @@ export class Product {
     @Column("text")
     description: string
 
+    @IsUrl()
     @Column()
     imageUrl: string
 
