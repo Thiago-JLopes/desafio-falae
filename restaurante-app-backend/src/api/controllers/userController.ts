@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { UserRepository } from '../repository/userRepository';
+import { UserRepository } from '../../model/repository/userRepository';
 import { User } from '../../model/entity/User';
 
 // Definir uma interface para o corpo da requisição

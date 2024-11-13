@@ -14,7 +14,8 @@
       "express": "^4.21.1",
       "pg": "^8.13.1",
       "reflect-metadata": "^0.1.14",
-      "typeorm": "^0.3.20"
+      "typeorm": "^0.3.20",
+      "validator": "^13.12.0"
    },
    "scripts": {
       "start": "ts-node src/index.ts",
