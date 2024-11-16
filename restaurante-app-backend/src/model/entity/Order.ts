@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne, OneToMany } from "typeorm"
-import { User } from "./User"
-import { OrderItem } from "./OrderItem"
+import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne, OneToMany, JoinTable } from "typeorm";
+import { User } from "./User";
+import { OrderItem } from "./OrderItem";
 
 export enum OrderStatus {
     PENDENTE = "Pendente",
@@ -12,20 +12,21 @@ export enum OrderStatus {
 @Entity()
 export class Order {
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
-    @Column("decimal",{precision: 10, scale: 2, nullable: false})
-    totalPrice: number
+    @Column("decimal", { precision: 10, scale: 2, nullable: false })
+    totalPrice: number;
 
-    @Column({type: "enum", enum: OrderStatus, nullable: false})
-    status: OrderStatus
+    @Column({ type: "enum", enum: OrderStatus, nullable: false })
+    status: OrderStatus;
 
-    @Column({type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
-    createAt: Date
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+    createAt: Date;
 
     @ManyToOne(() => User, (user) => user.orders)
-    user: User
+    @JoinColumn({ name: "user_id" }) // Nome explícito da coluna de chave estrangeira
+    user: User;
 
     @OneToMany(() => OrderItem, (orderItem) => orderItem.order)
-    items: OrderItem[];  // Relacionamento indireto com Product através de OrderItem   
+    items: OrderItem[];
 }

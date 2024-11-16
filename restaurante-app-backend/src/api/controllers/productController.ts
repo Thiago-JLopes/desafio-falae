@@ -1,40 +1,31 @@
 import { Request, Response } from 'express';
 import { ProductRepository } from '../../model/repository/productRepository';
 import { Product } from '../../model/entity/Product';
-import { validate, Validate } from 'class-validator';
-import { UpdateProductDto } from '../dtos/productDTO';
+import { validate } from 'class-validator';
+import { UpdateProductDto } from '../dtos/updateProductDTO';
+import { ProductDto } from '../dtos/productDTO';
 
-// Definir uma interface para o corpo da requisição
-interface RegisterRequest {
-  name: string;
-  price: number;
-  category: string;
-  description?: string;
-  imageUrl?: string
-}
 
 //Registro de produto
+//POST /api/products
 export const product = async (req: Request, res: Response): Promise<void> => {
   // Verifica se o corpo da requisição está presente
   if (!req.body) {
     return res.status(400).json({ message: "BAD REQUEST - falta de parâmetros na requisição!" });
   }
 
-  const { name, price, category, description, imageUrl } = req.body as RegisterRequest;
-
-  // Valida se os campos obrigatórios estão presentes
-  if (!name || !price || !category) {
-    return res.status(400).json({ message: "Existem campos obrigatórios que não foram fornecidos" });
-  }
-
   try {
+    let productDto = new ProductDto();
+    Object.assign(productDto, req.body); //copia os valores para producDto
+
+    const errors = await validate(productDto);
+    if(errors.length > 0) {
+      return res.status(400).json({ message: "Parâmetros incorretos!", errors });
+    }
+
     // Cria uma nova instância de usuário
     const product = new Product();
-    product.name = name;
-    product.price = price;
-    product.category = category;
-    product.description = description;
-    product.imageUrl = imageUrl;
+    Object.assign(product, productDto);
 
     // Salva o usuário
     await ProductRepository.save(product);
@@ -48,6 +39,7 @@ export const product = async (req: Request, res: Response): Promise<void> => {
 
 
 //Endpoint para listar produtos
+//GET /api/products
 export const products = async (req: Request, res: Response): Promise<void> => {
   const { category, minPrice, maxPrice, sortBy, order } = req.query;
   try {
@@ -85,10 +77,11 @@ export const products = async (req: Request, res: Response): Promise<void> => {
 }
 
 //Buscar produto específico
+//GET /api/products/:id
 export const productFindOne = async (req: Request, res: Response): Promise<void> => {
 
   const { id } = req.params;
-  if(isNaN(Number(id))) {
+  if(isNaN(Number(id))) { //verifica se o id esta em formato válido ou que possa ser convertido para number
     return res.status(400).json({message: "O ID deve ser válido"});
   }
 
@@ -108,9 +101,14 @@ export const productFindOne = async (req: Request, res: Response): Promise<void>
 }
 
 //Endpoit para atualizr um produto
+//PUT /api/products/:id
 export const updateProduct = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
-
+  
+  if(isNaN(Number(id))) { //verifica se o id esta em formato válido ou que possa ser convertido para number
+    return res.status(400).json({message: "O ID deve ser válido"});
+  }
+  
   try {
     // Encontra o produto pelo ID
     const product = await ProductRepository.findOneBy({ id: parseInt(id) });
@@ -139,4 +137,27 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
     return res.status(500).json({ message: 'Erro ao atualizar produto' });
   }
 
+}
+
+//Excluir produto
+//DELETE /api/products/:id
+export const deleteProduct = async(req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+
+  if(isNaN(Number(id))) { //verifica se o id esta em formato válido ou que possa ser convertido para number
+    return res.status(400).json({message: "O ID deve ser válido"});
+  }
+  
+  try {
+    const deleteResult = await ProductRepository.delete(id);
+
+    //verifica se algum registro foi alterado
+    if(deleteResult.affected === 0) {
+      return res.status(404).json({message: "Produto inexistente."});
+    }
+
+    return res.status(200).json({message: "Produto deletado com sucesso."});
+  } catch (error) {
+    return res.status(500).json({message: "Erro ao deletar Produto", error});
+  }
 }

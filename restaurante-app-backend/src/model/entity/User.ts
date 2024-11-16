@@ -1,35 +1,27 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
-import { Order } from "./Order"
-import {
-    Contains,
-    IsInt,
-    Length,
-    IsEmail,
-    IsFQDN,
-    IsDate,
-    Min,
-    Max,
-} from "class-validator";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Order } from "./Order";
 
 @Entity()
 export class User {
-
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
-    @Column({length: 200, nullable: false})
-    name: string
+    @Column({ length: 200, nullable: false })
+    name: string;
 
-    @IsEmail()
-    @Column({length: 100, unique: true, nullable: false})
-    email: string
+    @Column({ length: 100, unique: true, nullable: false })
+    email: string;
 
     @Column("text")
-    address: string
+    address: string;
 
-    @Column({length: 15})
-    phone: string
+    @Column({ unique: true, nullable: false })
+    phone: string;
 
+    // @Column({ type: "enum", enum: ["client", "admin"], default: "client" })
+    // role: string;
+    
     @OneToMany(() => Order, (order) => order.user)
-    orders: Order[]
+    orders: Order[];
+    
 }

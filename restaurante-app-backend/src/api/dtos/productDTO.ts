@@ -1,25 +1,24 @@
-import { IsNotEmpty, IsString, IsNumber, IsOptional, IsUrl } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, IsOptional, IsUrl, Min, IsNumberString } from 'class-validator';
+import { IsNumberOrIsNumberString } from '../../service/productServices';
 
-export class UpdateProductDto {
-  @IsOptional()
+export class ProductDto {
   @IsString()
-  @IsNotEmpty()
-  name?: string;
+  @IsNotEmpty({message: 'o $property não pode ser vazio'})
+  name: string;
 
-  @IsOptional()
-  @IsNumber()
-  price?: number;
+  @IsNumberOrIsNumberString({message: "O valor de $property deve ser um número ou uma string que represente um número"})
+  @IsNotEmpty({message: 'o $property não pode ser vazio'})
+  @Min(0, {message: 'o $property não pode ser menor que 0'})
+  price: number;
 
-  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  category?: string;
+  @IsNotEmpty({message: 'o $property não pode ser vazio'})
+  category: string;
 
   @IsOptional()
   @IsString()
   description?: string;
 
-  @IsOptional()
   @IsUrl()
   imageUrl?: string;
 }
