@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 import { AppDataSource } from "./data-source";
 import userRoutes from "../src/routes/userRoutes"
 import productRoutes from "../src/routes/productRoutes";
@@ -6,6 +7,7 @@ import orderRoutes from "../src/routes/orderRoutes";
 
 // Importa o módulo `express` para criar um servidor HTTP.
 const app = express(); // Cria uma instância do Express.
+app.use(cors()); // Habilitar CORS para todas as origens
 const PORT = 3000;     // Define a porta em que o servidor vai escutar.
 
 // Middleware para parsear JSON
