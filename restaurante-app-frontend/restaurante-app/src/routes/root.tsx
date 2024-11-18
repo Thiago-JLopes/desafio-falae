@@ -3,7 +3,7 @@ import logo from '../assets/park-junk-food-fast-food (1).png';
 
   export default function Root() {
     return (
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col h-screen bg-slate-200">
         {/* Header */}
         <header className="flex flex-row justify-between items-center p-2 w-full h-14 bg-cyan-900 shadow-slate-700">
           <Link to={'/'} className="flex flex-row justify-center items-center p-2">

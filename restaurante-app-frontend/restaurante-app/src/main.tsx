@@ -8,8 +8,8 @@ import './index.css'
 import Root from './routes/root';
 import ErrorPage from './error-page';
 import Home from './routes/home';
-import Clientes, { loader as clientesLoader } from "./routes/clientes";
 import Products from './routes/products';
+import Users from './routes/users';
 
 const router = createBrowserRouter([
   {
@@ -23,8 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: "users/",
-        element: <Clientes />,
-        loader: clientesLoader,
+        element: <Users />,
       },
       {
         path: "products/",
