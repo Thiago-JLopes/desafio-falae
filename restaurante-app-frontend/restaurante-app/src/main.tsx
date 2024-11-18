@@ -9,7 +9,7 @@ import Root from './routes/root';
 import ErrorPage from './error-page';
 import Home from './routes/home';
 import Clientes, { loader as clientesLoader } from "./routes/clientes";
-import Products, { loader as productsLoader } from './routes/products';
+import Products from './routes/products';
 
 const router = createBrowserRouter([
   {
@@ -29,7 +29,6 @@ const router = createBrowserRouter([
       {
         path: "products/",
         element: <Products />,
-        loader: productsLoader,
       }
     ]
   },
