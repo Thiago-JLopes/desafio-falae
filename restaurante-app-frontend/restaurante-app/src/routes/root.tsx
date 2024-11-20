@@ -1,7 +1,9 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigation } from "react-router-dom";
 import logo from '../assets/park-junk-food-fast-food (1).png';
 
   export default function Root() {
+    const navigation = useNavigation();
+
     return (
       <div className="flex flex-col h-screen bg-slate-200">
         {/* Header */}
@@ -18,11 +20,11 @@ import logo from '../assets/park-junk-food-fast-food (1).png';
           <div className="h-full w-56 bg-gray-100 border-r p-3 flex flex-col rounded-e-lg">
           <ul>
             <li>
-                <Link to="/home" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Home</Link>
+                <Link to="/menu" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Cardápio</Link>
             </li>
             
             <li>
-                <Link to="/users" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Clientes</Link>
+                <Link to="/users" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Usuários</Link>
             </li>
             
             <li>
@@ -37,7 +39,7 @@ import logo from '../assets/park-junk-food-fast-food (1).png';
           </div>
   
           {/* Detalhes */}
-          <div className="flex-1 p-5">
+          <div className={navigation.state === "loading" ? "loading" : "flex-1 p-5"}>
             <Outlet />
           </div>
         </div>

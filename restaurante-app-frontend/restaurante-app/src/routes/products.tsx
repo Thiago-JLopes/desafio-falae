@@ -12,17 +12,6 @@ interface Product {
   imageUrl: string;
 }
 
-// // Função loader para buscar os dados dos produtos
-// export async function loader(): Promise<{ products: Product[] }> {
-//   try {
-//     const response = await axios.get(getProducts); // Faz uma requisição para obter os produtos cadastrados
-//     return { products: response.data }; // Retorna os dados no formato esperado
-//   } catch (error) {
-//     console.error("Erro ao carregar os produtos:", error); // Exibe erros no console para facilitar o debug
-//     throw new Response("Erro ao carregar os produtos", { status: 500 }); // Lança um erro para ser tratado pelo React Router
-//   }
-// }
-
 export default function Products() {
   //produtos
   const [products, setProducts] = useState<Product[]>([]);
@@ -267,24 +256,13 @@ export default function Products() {
           <option value="asc">Crescente</option>
           <option value="desc">Decrescente</option>
         </select>
-
-        <div className="flex flex-wrap gap-4">
-          {/* Botão para aplicar filtro */}
-          <button
-            onClick={fetchProducts}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Aplicar Filtros
-          </button>
-
-          {/* Botão para abrir o modal e adicionar um produto */}
-          <button
-            onClick={handleAddProduct}
-            className="bg-green-500 text-white px-4 py-2 rounded cursor-pointer"
-          >
-            Adicionar Produto
-          </button>
-        </div>
+        {/* Botão para abrir o modal e adicionar um produto */}
+        <button
+          onClick={handleAddProduct}
+          className="bg-green-500 text-white px-4 py-2 rounded cursor-pointer"
+        >
+          Adicionar Produto
+        </button>
       </div>
 
       {/* Tabela que exibe os produtos */}

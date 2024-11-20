@@ -7,9 +7,9 @@ import {
 import './index.css'
 import Root from './routes/root';
 import ErrorPage from './error-page';
-import Home from './routes/home';
 import Products from './routes/products';
 import Users from './routes/users';
+import Menu from './routes/menu';
 
 const router = createBrowserRouter([
   {
@@ -18,8 +18,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path:"home/",
-        element: <Home />,
+        path:"menu/",
+        element: <Menu />,
       },
       {
         path: "users/",
