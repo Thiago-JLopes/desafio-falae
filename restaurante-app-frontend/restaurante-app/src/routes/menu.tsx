@@ -58,8 +58,14 @@ export default function Menu() {
     }
   }
 
+  //função de controle de exibição
   function toggleCart() {
     setShowCart(!showCart);
+  }
+
+  //função para excluir item do carrinho
+  function deleteProductCar(product: Product) {
+
   }
 
 
@@ -78,6 +84,7 @@ export default function Menu() {
     }
   }
 
+  //calcula valor do subtotal antes de finalizar pedido
   function calculateSubtotal() {
     return cart.reduce((total, item) => total + item.product.price * item.quantity, 0).toFixed(2);
   }

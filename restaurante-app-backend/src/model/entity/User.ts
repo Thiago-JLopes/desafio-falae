@@ -18,9 +18,12 @@ export class User {
     @Column({ unique: true, nullable: false })
     phone: string;
 
-    // @Column({ type: "enum", enum: ["client", "admin"], default: "client" })
-    // role: string;
-    
+    @Column()
+    password: string;
+
+    @Column({ default: "client" })
+    role: string;
+        
     @OneToMany(() => Order, (order) => order.user)
     orders: Order[];
     
