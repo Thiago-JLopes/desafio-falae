@@ -10,6 +10,7 @@ import ErrorPage from './error-page';
 import Products from './routes/products';
 import Users from './routes/users';
 import Menu from './routes/menu';
+import { Orders } from './routes/orders';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "products/",
         element: <Products />,
+      },
+      {
+        path: "orders/",
+        element: <Orders />
       }
     ]
   },

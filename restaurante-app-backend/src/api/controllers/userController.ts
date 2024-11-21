@@ -36,6 +36,28 @@ export const register = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//getUser
+//GET api/user/:id
+export const getUser = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+
+  if (isNaN(Number(id))) {
+    return res.status(400).json({ message: "ID inválido, o valor deve ser numérico." });
+  }
+
+  //busca dados do usuario
+  try {
+    const user = await UserRepository.findOne({
+      where: {id: parseInt(id)},
+      relations: ["orders"]
+    })
+
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).json("erro ao buscar dados do usuario");
+  }
+}
+
 
 //login
 //POST api/auth/login

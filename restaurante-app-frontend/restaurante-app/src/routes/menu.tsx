@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { getProducts } from "../utils/apiRoutes";
+import { createOrder, getProducts } from "../utils/apiRoutes";
 import cartImage from "../assets/vista-lateral-vazia-do-carrinho-de-compras.png"
 
 // Interface para os dados do produto
@@ -19,6 +19,15 @@ interface CartItem {
   quantity: number;
 }
 
+//Inteface User
+interface User {
+  id: number;
+  nome: string;
+  address: string;
+  phone: string;
+  role: string;
+  email: string
+}
 
 export default function Menu() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -63,10 +72,10 @@ export default function Menu() {
     setShowCart(!showCart);
   }
 
-  //função para excluir item do carrinho
-  function deleteProductCar(product: Product) {
+  // //função para excluir item do carrinho
+  // function deleteProductCar(product: Product) {
 
-  }
+  // }
 
 
   //Função para adicionar produto ao carrinho
@@ -89,10 +98,32 @@ export default function Menu() {
     return cart.reduce((total, item) => total + item.product.price * item.quantity, 0).toFixed(2);
   }
 
+  const finalizeOrder = async () => {
+    const currentUser = localStorage.getItem("currentUser");
+    
+    if(currentUser){
+      const user : User = JSON.parse(currentUser);
+      try {
+        const response = await axios.post(createOrder, {
+          userId: user.id,
+          products: cart
+        })
+
+        console.log(response);
+        window.alert("Pedido recebido")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    setCart([]);
+    setShowCart;
+    return;
+  }
+
 
   return (
     <div className=" flex flex-col justify-center items-center text-center">
-      <div className="w-full flex justify-end px-1 pr-14 mb-3"> <img src={cartImage} alt="Carrinho" className="h-10 cursor-pointer"  onClick={toggleCart}/> </div>
+    <div className="w-full flex justify-end px-1 pr-14 mb-3"> <img src={cartImage} alt="Carrinho" className="h-10 cursor-pointer"  onClick={toggleCart}/> {cart.length >= 1 &&(<span className="flex justify-center items-center w-4 h-4 text-white text-xs bg-red-600 rounded-full">{cart.length}</span>)}</div>
       <p className="text-teal-950 mb-6">Explore as deliciosas opções do nosso menu.</p>
       {/**Filtro de produtos para escolha do cliente */}
       
@@ -194,7 +225,10 @@ export default function Menu() {
                 <span className="font-semibold">Subtotal:</span>{" "}
                 <span>R${calculateSubtotal()}</span>
               </div>
-              <button className="mt-4 w-full bg-red-400 text-white py-2 rounded hover:bg-red-500">
+              <button className="mt-4 w-full bg-gray-400 text-white py-2 rounded" onClick={() => setCart([])}>
+                Esvaziar Carrinho
+              </button>
+              <button className="mt-4 w-full bg-red-400 text-white py-2 rounded hover:bg-red-500" onClick={finalizeOrder}>
                 Finalizar Pedido
               </button>
             </div>
