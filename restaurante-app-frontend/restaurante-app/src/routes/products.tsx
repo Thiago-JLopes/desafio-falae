@@ -148,7 +148,7 @@ export default function Products() {
       {/* Modal para adicionar ou editar um produto */}
       {showModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded shadow-lg w-96">
+          <div className="bg-white p-6 rounded shadow-lg sm:w-96 w-72">
             <h2 className="text-xl font-bold mb-4">{labelModal}</h2>
             <form>
               {/* Campos do formulário para os dados do produto */}
@@ -217,32 +217,31 @@ export default function Products() {
       )}
       <h2>Filtrar Produtos</h2>
       <div className="flex flex-wrap gap-4 mb-4">
-        {/* Filtros */}
         <input
           type="text"
           placeholder="Categoria"
           value={filters.category}
           onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-          className="border px-3 py-2 rounded"
+          className="border px-3 py-2 rounded w-full sm:w-auto"
         />
         <input
           type="number"
           placeholder="Preço mínimo"
           value={filters.minPrice}
           onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
-          className="border px-3 py-2 rounded"
+          className="border px-3 py-2 rounded w-full sm:w-auto"
         />
         <input
           type="number"
           placeholder="Preço máximo"
           value={filters.maxPrice}
           onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })}
-          className="border px-3 py-2 rounded"
+          className="border px-3 py-2 rounded w-full sm:w-auto"
         />
         <select
           value={filters.sortBy}
           onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
-          className="border px-3 py-2 rounded"
+          className="border px-3 py-2 rounded w-full sm:w-auto"
         >
           <option value="">Ordenar por</option>
           <option value="name">Nome</option>
@@ -251,65 +250,65 @@ export default function Products() {
         <select
           value={filters.order}
           onChange={(e) => setFilters({ ...filters, order: e.target.value })}
-          className="border px-3 py-2 rounded"
+          className="border px-3 py-2 rounded w-full sm:w-auto"
         >
           <option value="asc">Crescente</option>
           <option value="desc">Decrescente</option>
         </select>
-        {/* Botão para abrir o modal e adicionar um produto */}
         <button
           onClick={handleAddProduct}
-          className="bg-green-500 text-white px-4 py-2 rounded cursor-pointer"
+          className="bg-green-500 text-white px-4 py-2 rounded w-full sm:w-auto"
         >
           Adicionar Produto
         </button>
-      </div>
+        </div>
+
 
       {/* Tabela que exibe os produtos */}
-      <table className="min-w-full table-auto">
-        <thead>
-          <tr>
-            <th className="px-4 py-2">Nome</th>
-            <th className="px-4 py-2">Preço</th>
-            <th className="px-4 py-2">Categoria</th>
-            <th className="px-4 py-2">Descrição</th>
-            <th className="px-4 py-2">Imagem</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product) => (
-            <tr key={product.id}>
-              {/* Exibe as informações do produto em cada linha */}
-              <td className="border px-4 py-2">{product.name}</td>
-              <td className="border px-4 py-2">{product.price}</td>
-              <td className="border px-4 py-2">{product.category}</td>
-              <td className="border px-4 py-2">{product.description}</td>
-              <td className="border px-4 py-2">
-                <img
-                  src={product.imageUrl}
-                  alt={product.name}
-                  className="w-20 h-20 object-cover"
-                />
-              </td>
-              <td className="border px-4 py-2">
-                {/* Botões para editar e excluir o produto */}
-                <button
-                  onClick={() => editProduct(product)}
-                  className="bg-blue-500 text-white px-2 py-1 rounded m-2 cursor-pointer"
-                >
-                  Editar
-                </button>
-                <button
-                  onClick={() => deleteProduct(product.id)}
-                  className="bg-red-500 text-white px-2 py-1 rounded cursor-pointer"
-                >
-                  Excluir
-                </button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="min-w-full table-auto">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Nome</th>
+              <th className="px-4 py-2">Preço</th>
+              <th className="px-4 py-2">Categoria</th>
+              <th className="px-4 py-2">Descrição</th>
+              <th className="px-4 py-2">Imagem</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product.id}>
+                <td className="border px-4 py-2">{product.name}</td>
+                <td className="border px-4 py-2">{product.price}</td>
+                <td className="border px-4 py-2">{product.category}</td>
+                <td className="border px-4 py-2">{product.description}</td>
+                <td className="border px-4 py-2">
+                  <img
+                    src={product.imageUrl}
+                    alt={product.name}
+                    className="w-20 h-20 object-cover"
+                  />
+                </td>
+                <td className="border px-4 py-2">
+                  <button
+                    onClick={() => editProduct(product)}
+                    className="bg-blue-500 text-white p-2 sm:px-4 sm:py-2 mb-1 sm:mr-1 rounded cursor-pointer"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => deleteProduct(product.id)}
+                    className="bg-red-500 text-white p-2 sm:px-4 sm:py-2 rounded cursor-pointer"
+                  >
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

@@ -11,6 +11,7 @@ import Products from './routes/products';
 import Users from './routes/users';
 import Menu from './routes/menu';
 import { Orders } from './routes/orders';
+import Index from './routes';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      {index:true, element: <Index/>},
       {
         path:"menu/",
         element: <Menu />,

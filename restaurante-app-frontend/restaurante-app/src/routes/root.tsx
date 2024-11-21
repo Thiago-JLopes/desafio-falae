@@ -86,7 +86,7 @@ import { createUser, newLogin } from "../utils/apiRoutes";
         <header className="flex flex-row justify-between items-center p-2 w-full h-14 bg-cyan-900 shadow-slate-700">
           <Link to={'/'} className="flex items-center p-2">
             <img src={logo} alt="logo foodiehub" className="w-8 sm:w-10" />
-            <h1 className="text-lg sm:text-2xl text-gray-950 font-bold mx-2 sm:mx-5">FoodieHub</h1>
+            <h1 className="text-lg sm:text-2xl text-gray-100 font-bold mx-2 sm:mx-5">FoodieHub</h1>
           </Link>
           {loggedin ? (
             <div className="flex items-center">
@@ -123,6 +123,12 @@ import { createUser, newLogin } from "../utils/apiRoutes";
           {/* Sidebar */}
           <div className="w-full sm:w-56 bg-gray-100 border-r p-3 flex flex-col rounded-e-lg">
             <ul className="flex justify-between flex-row sm:flex-col sm:justify-normal">
+              <li>
+                <Link to="" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">
+                  Home
+                </Link>
+              </li>
+              
               <li>
                 <Link to="/menu" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">
                   Cardápio
