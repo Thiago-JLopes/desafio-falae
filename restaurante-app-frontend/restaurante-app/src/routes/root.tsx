@@ -81,7 +81,7 @@ import { createUser, newLogin } from "../utils/apiRoutes";
     }
 
     return (
-      <div className="flex flex-col min-h-screen bg-slate-200">
+      <div className="flex flex-col sm:min-h-screen bg-slate-200">
         {/* Header */}
         <header className="flex flex-row justify-between items-center p-2 w-full h-14 bg-cyan-900 shadow-slate-700">
           <Link to={'/'} className="flex items-center p-2">
@@ -123,28 +123,28 @@ import { createUser, newLogin } from "../utils/apiRoutes";
           {/* Sidebar */}
           <div className="w-full sm:w-56 bg-gray-100 border-r p-3 flex flex-col rounded-e-lg">
             <ul className="flex justify-between flex-row sm:flex-col sm:justify-normal">
-              <li>
+              <li className="sm:mb-3">
                 <Link to="" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">
                   Home
                 </Link>
               </li>
               
-              <li>
+              <li className="sm:mb-3">
                 <Link to="/menu" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">
                   Cardápio
                 </Link>
               </li>
-              <li>
+              <li className="sm:mb-3">
                 <Link to="/users" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">
                   Usuários
                 </Link>
               </li>
-              <li>
+              <li className="sm:mb-3">
                 <Link to="/products" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">
                   Produtos
                 </Link>
               </li>
-              <li>
+              <li className="sm:mb-3">
                 <Link to="/orders" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">
                   Pedidos
                 </Link>
