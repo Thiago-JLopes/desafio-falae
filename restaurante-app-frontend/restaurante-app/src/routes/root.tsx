@@ -90,6 +90,7 @@ import { createUser, newLogin } from "../utils/apiRoutes";
       localStorage.clear();
       setLoggedin(false);
       setShowConfig(false);
+      setRole(null);
     }
 
     return (
