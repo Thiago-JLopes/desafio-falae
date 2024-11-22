@@ -1,11 +1,21 @@
 import { Link, Outlet, useNavigation } from "react-router-dom";
 import logo from '../assets/park-junk-food-fast-food (1).png';
 import perfil from '../assets/perfil.png';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { createUser, newLogin } from "../utils/apiRoutes";
 
   export default function Root() {
+    const [role, setRole] = useState(null);
+    // Verifica se há usuário logado ao carregar o componente
+  useEffect(() => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
+    if (currentUser && currentUser.role) {
+      setLoggedin(true);
+      setRole(currentUser.role);
+    }
+  }, []);
+    
     const navigation = useNavigation();
     const [showModal, setShowModal] = useState(false);
     const[newUser, setNewUser] = useState({
@@ -63,6 +73,8 @@ import { createUser, newLogin } from "../utils/apiRoutes";
           password
         });
 
+        const { role } = response.data;
+        setRole(role);
         localStorage.setItem("currentUser", JSON.stringify(response.data));
         handleCloseModal();
         setLoggedin(true);
@@ -134,7 +146,7 @@ import { createUser, newLogin } from "../utils/apiRoutes";
                   Cardápio
                 </Link>
               </li>
-              <li className="sm:mb-3">
+              {loggedin && role === "admin" &&(<div className="sm:flex sm:flex-col flex flex-row"><li className="sm:mb-3">
                 <Link to="/users" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">
                   Usuários
                 </Link>
@@ -148,7 +160,7 @@ import { createUser, newLogin } from "../utils/apiRoutes";
                 <Link to="/orders" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">
                   Pedidos
                 </Link>
-              </li>
+              </li></div>)}
             </ul>
           </div>
   
@@ -174,7 +186,7 @@ import { createUser, newLogin } from "../utils/apiRoutes";
                         type="text"
                         className="w-full px-3 py-2 border rounded"
                         value={newUser.name}
-                        onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+                        onChange={(e) => {setNewUser({ ...newUser, name: e.target.value }); setMsgError('')}}
                       />
                     </div>
                     <div>
@@ -212,7 +224,7 @@ import { createUser, newLogin } from "../utils/apiRoutes";
                     type="text"
                     className="w-full px-3 py-2 border rounded"
                     value={newUser.login}
-                    onChange={(e) => setNewUser({ ...newUser, login: e.target.value })}
+                    onChange={(e) => {setNewUser({ ...newUser, login: e.target.value }); setMsgError('')}}
                   />
                 </div>)}
                 <div>
