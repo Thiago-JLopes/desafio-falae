@@ -38,6 +38,28 @@ Este é o backend da aplicação **Restaurante App**, desenvolvido com **Node.js
     ```
     O servidor estará disponível em: http://localhost:3000
 
+## Criação de Usuários com Role Admin
+   Para criar os primeiros usuários administradores, você pode usar o banco de dados diretamente ou a API.
+   ### Pelo Banco de Dados
+   Execute o seguinte comando SQL no terminal do PostgreSQL para criar um usuário com role `admin`:
+   ```bash
+      INSERT INTO "user" (name, email, address, phone, role, password, created_at, updated_at) 
+      VALUES 
+   ('Admin User', 'admin@example.com', 'Rua Central, 123', '123456789', 'admin', 'senha', NOW(), NOW());
+   ```
+   ### Pela API
+   Envie uma requisição POST para a rota de registro `(/api/auth/register)` e especifique `role`: "admin" no corpo da requisição. Exemplo:
+   ```json
+      {
+           "name": "Admin User",
+           "email": "admin@example.com",
+           "address": "Rua Central, 123",
+           "phone": "123456789",
+           "password": "senha_segura",
+           "role": "admin"
+      }
+   ```
+   
 ## Estrutura do Projeto
 
 ### Rotas da API
