@@ -44,7 +44,7 @@ export default function Users() {
         throw new Error("Dados do usuário inválidos no localStorage.");
       }
   
-      const response = await axios.get<User[]>(`${getUsers}/${user.id}`); // Tipo da resposta esperado
+      const response = await axios.get(`${getUsers}currentUserId=${user.id}`); 
       setUsers(response.data);
     } catch (error) {
       console.error("Erro ao carregar usuários:", error);

@@ -2,7 +2,7 @@
 export const host = "http://localhost:3000";
 
 //rotas usuarios
-export const getUsers = `${host}/api/users`; //rota para obter todos os usuarios
+export const getUsers = `${host}/api/users?`; //rota para obter todos os usuarios
 export const getUser = `${host}/api/user`; //rota para ubter usuario por id
 export const createUser = `${host}/api/auth/register`;//rota para cadastrar usuario
 export const newLogin = `${host}/api/auth/login`;//rota para login
