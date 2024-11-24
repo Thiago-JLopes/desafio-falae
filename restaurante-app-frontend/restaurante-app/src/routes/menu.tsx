@@ -41,7 +41,14 @@ export default function Menu() {
 
   const [cart, setCart] = useState<CartItem[]>([]); // Estado para armazenar o carrinho
   const [showCart, setShowCart] = useState(false);
+  const [user, setUser] = useState<User>();
 
+  useEffect(() => {
+    const currentUser = localStorage.getItem("currentUser");
+    if(currentUser) {
+      setUser(JSON.parse(currentUser));
+    }
+  }, [localStorage.getItem("currentUser")]);
 
   useEffect(() => {
     fetchProducts();
@@ -111,12 +118,11 @@ export default function Menu() {
 
         console.log(response);
         window.alert("Pedido recebido")
+        setCart([]);
       } catch (error) {
         console.log(error);
       }
     }
-    setCart([]);
-    setShowCart;
     return;
   }
 
@@ -199,13 +205,14 @@ export default function Menu() {
 
 
       {showCart && (
-        <div className="absolute top-24 right-24 bg-white shadow-lg rounded-lg p-4 w-80">
+        <div className="absolute top-24 sm:right-24 right-10 bg-white shadow-lg rounded-lg p-4 w-80">
           <div className="flex justify-between items-center border-b pb-2 mb-2">
             <h3 className="font-semibold text-lg">Carrinho</h3>
             <button onClick={toggleCart} className="text-red-500 text-lg">
               ✕
             </button>
           </div>
+          {!user && cart.length > 0 && (<span className="text-red-600 text-sm font-bold">Efetue login para concluir seu pedido</span>)}
           {cart.length === 0 ? (
             <p className="text-gray-500">Seu carrinho está vazio.</p>
           ) : (

@@ -9,6 +9,7 @@ type User = {
   email: string;
   address: string;
   phone: string;
+  password: string;
   role: string;
 };
 
@@ -20,6 +21,7 @@ export default function Users() {
     email: "",
     address: "",
     phone: "",
+    password: "12345", ///senha padrão
     role: "user",
   });
   const [users, setUsers] = useState<User[]>([]); // Define o tipo como um array de `User`
@@ -28,7 +30,7 @@ export default function Users() {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [newUser]);
 
   const fetchUsers = async () => {
     try {
@@ -53,7 +55,7 @@ export default function Users() {
   
   const handleCloseModal = () => {
     setShowModal(false);
-    setNewUser({ id: null, name: "", email: "", address: "", phone: "", role: "user" });
+    setNewUser({ id: null, name: "", email: "", address: "", phone: "",password:"12345" , role: "user" });
     setIsEditing(false);
     setMsgError("");
   };
@@ -63,21 +65,87 @@ export default function Users() {
       setNewUser(user);
       setIsEditing(true);
     } else {
-      setNewUser({ id: null, name: "", email: "", address: "", phone: "", role: "user" });
+      setNewUser({ id: null, name: "", email: "", address: "", phone: "", password:"12345", role: "user" });
       setIsEditing(false);
     }
     setShowModal(true);
   };
 
   const saveUser = async () => {
+    try {
+      const { name, email, address, phone, password } = newUser;
+      const response = await axios.post(createUser, {
+        name,
+        email,
+        address,
+        phone,
+        password
+      })
+      window.alert("Usuário criado com sucesso!");
+      console.log(response);
+      handleCloseModal();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  const updateUsers = async () => {
+    try {
+      const currentUser = localStorage.getItem("currentUser");
+  
+      if (!currentUser) {
+        throw new Error("Usuário atual não encontrado no localStorage.");
+      }
+  
+      const user: User = JSON.parse(currentUser);
+  
+      if (!user || !user.id) {
+        throw new Error("Dados do usuário inválidos no localStorage.");
+      }
+
+      const { name, email, address, phone } = newUser;
+      const response = await axios.put(`${updateUser}currentUserId=${user.id}&id=${newUser.id}`, {
+        name,
+        email,
+        address,
+        phone,
+      })
+      window.alert("Dados atualizados");
+      console.log(response);
+      handleCloseModal();
+    } catch (error) {
+      console.log(error);
+    }    
+  }
+
   const promoteToAdmin = async (id: number | null) => {
-    
+    try {
+      const currentUser = localStorage.getItem("currentUser");
+  
+      if (!currentUser) {
+        throw new Error("Usuário atual não encontrado no localStorage.");
+      }
+  
+      const user: User = JSON.parse(currentUser);
+  
+      if (!user || !user.id) {
+        throw new Error("Dados do usuário inválidos no localStorage.");
+      }
+
+      const response = await axios.put(`${updateUser}currentUserId=${user.id}&id=${id}`, {
+        role: "admin"
+      })
+      window.alert("Role do usuário alterada!");
+      console.log(response);
+      fetchUsers();
+  
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <div>
+    <div className="static">
       <button className="bg-green-500 text-white px-4 py-2 rounded mb-4" onClick={() => handleOpenModal()}>
         Cadastrar Usuário
       </button>
@@ -163,9 +231,13 @@ export default function Users() {
               <button className="bg-gray-500 text-white px-4 py-2 rounded mr-2" onClick={handleCloseModal}>
                 Cancelar
               </button>
+              {isEditing ? (<button className="bg-green-500 text-white px-4 py-2 rounded" onClick={updateUsers}>
+                Salvar
+              </button>)
+              :(
               <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={saveUser}>
                 Salvar
-              </button>
+              </button>)}
             </div>
           </div>
         </div>

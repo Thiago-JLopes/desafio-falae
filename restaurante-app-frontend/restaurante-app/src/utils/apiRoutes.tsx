@@ -6,7 +6,7 @@ export const getUsers = `${host}/api/users?`; //rota para obter todos os usuario
 export const getUser = `${host}/api/user`; //rota para ubter usuario por id
 export const createUser = `${host}/api/auth/register`;//rota para cadastrar usuario
 export const newLogin = `${host}/api/auth/login`;//rota para login
-export const updateUser = `${host}/users`; //atualizar;
+export const updateUser = `${host}/api/users?`; //atualizar;
 //rotas produtos
 export const getProducts = `${host}/api/products`; //rota para obter produtos
 export const createProducts = `${host}/api/products`; //rota para criar produto

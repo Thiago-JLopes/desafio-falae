@@ -96,7 +96,7 @@ import { createUser, newLogin } from "../utils/apiRoutes";
     return (
       <div className="flex flex-col sm:min-h-screen bg-slate-200">
         {/* Header */}
-        <header className="flex flex-row justify-between items-center p-2 w-full h-14 bg-cyan-900 shadow-slate-700">
+        <header className="sticky top-0 flex flex-row justify-between items-center p-2 w-full h-14 bg-cyan-900 shadow-slate-700">
           <Link to={'/'} className="flex items-center p-2">
             <img src={logo} alt="logo foodiehub" className="w-8 sm:w-10" />
             <h1 className="text-lg sm:text-2xl text-gray-100 font-bold mx-2 sm:mx-5">FoodieHub</h1>
@@ -132,10 +132,10 @@ import { createUser, newLogin } from "../utils/apiRoutes";
         </header>
   
         {/* Layout principal */}
-        <div className="flex flex-1 flex-col sm:flex-row">
+        <div className="flex flex-1 flex-col static">
           {/* Sidebar */}
-          <div className="w-full sm:w-56 bg-gray-100 border-r p-3 flex flex-col rounded-e-lg">
-            <ul className="flex justify-between flex-row sm:flex-col sm:justify-normal">
+          <div className=" sticky top-14 flex items-center justify-center w-full bg-gray-100 border-r rounded-e-lg">
+            <ul className="flex justify-between flex-row overflow-x-auto">
               <li className="sm:mb-3">
                 <Link to="" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">
                   Home
@@ -147,7 +147,7 @@ import { createUser, newLogin } from "../utils/apiRoutes";
                   Cardápio
                 </Link>
               </li>
-              {loggedin && role === "admin" &&(<div className="sm:flex sm:flex-col flex flex-row"><li className="sm:mb-3">
+              {loggedin && role === "admin" &&(<div className="flex flex-row"><li className="sm:mb-3">
                 <Link to="/users" className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">
                   Usuários
                 </Link>
@@ -166,8 +166,8 @@ import { createUser, newLogin } from "../utils/apiRoutes";
           </div>
   
           {/* Detalhes */}
-          <div className={`${navigation.state === "loading" ? "loading" : "flex-1 p-5"} overflow-auto`}>
-            <Outlet />
+          <div className={`${navigation.state === "loading" ? "loading" : "flex-1 p-5"} overflow-auto static`}>
+            <Outlet/>
           </div>
         </div>
   
@@ -259,7 +259,8 @@ import { createUser, newLogin } from "../utils/apiRoutes";
   
         {/* Configurações */}
         {showConfig && (
-          <div className="absolute top-16 right-10 bg-slate-400 shadow-lg rounded p-4 w-36">
+          <div className="fixed top-16 right-10 bg-slate-400 shadow-lg rounded p-4 w-36">
+            <Link to={'/orders'} className="sm:hidden mb-4 hover:text-orange-800 hover:underline cursor-pointer">Meus pedidos</Link>
             <p className="mb-4 hover:text-orange-800 hover:underline cursor-pointer">Configurações</p>
             <button
               className="bg-red-300 text-white px-4 py-1 rounded cursor-pointer"
