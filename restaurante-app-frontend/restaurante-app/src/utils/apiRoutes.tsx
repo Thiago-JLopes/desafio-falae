@@ -5,10 +5,11 @@ const host = import.meta.env.VITE_API_HOST;
 
 
 //rotas usuarios
-export const getUsers = `${host}/api/users/`; //rota para obter todos os usuarios
+export const getUsers = `${host}/api/users?`; //rota para obter todos os usuarios
 export const getUser = `${host}/api/user`; //rota para ubter usuario por id
 export const createUser = `${host}/api/auth/register`;//rota para cadastrar usuario
 export const newLogin = `${host}/api/auth/login`;//rota para login
+export const updateUser = `${host}/api/users?`; //atualizar;
 //rotas produtos
 export const getProducts = `${host}/api/products`; //rota para obter produtos
 export const createProducts = `${host}/api/products`; //rota para criar produto
