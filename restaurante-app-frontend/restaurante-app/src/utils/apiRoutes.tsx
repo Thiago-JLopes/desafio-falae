@@ -1,5 +1,8 @@
 //host api
-export const host = "http://localhost:3000";
+//export const host = "http://localhost:3000";
+const host = import.meta.env.VITE_API_HOST;
+
+
 
 //rotas usuarios
 export const getUsers = `${host}/api/users/`; //rota para obter todos os usuarios
